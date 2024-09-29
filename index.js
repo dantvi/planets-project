@@ -3,8 +3,12 @@ const fs = require('fs');
 
 const results = [];
 
+// Reading raw data from the file and parsing the data to an array with objects
 fs.createReadStream('kepler_data.csv')
-    // Reading raw data from the file, the data needs to be parsed
+    .pipe(parse({
+        comment: '#',
+        columns: true,
+    }))
     .on('data', (data) => {
         results.push(data);
     })
@@ -15,3 +19,4 @@ fs.createReadStream('kepler_data.csv')
         console.log('resultsArray:', results);
         console.log('done');
     });
+
